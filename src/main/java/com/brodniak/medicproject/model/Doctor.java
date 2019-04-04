@@ -1,29 +1,26 @@
-package com.brodniak.medicproject;
-
-import java.io.File;
+package com.brodniak.medicproject.model;
 
 public class Doctor {
 
-    int id;
+    int DoctorId;
     String specialisation;
     String firstName;
     String lastName;
-    File workTime;
 
 
-    public Doctor(int id, String specialisation, String firstName, String lastName) {
-        this.id = id;
+    public Doctor(int DoctorId, String specialisation, String firstName, String lastName) {
+        this.DoctorId = DoctorId;
         this.specialisation = specialisation;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public int getId() {
-        return id;
+    public int getDoctorId() {
+        return DoctorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDoctorId(int doctorId) {
+        this.DoctorId = doctorId;
     }
 
     public String getSpecialisation() {
@@ -50,22 +47,13 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public File getWorkTime() {
-        return workTime;
-    }
-
-    public void setWorkTime(File workTime) {
-        this.workTime = workTime;
-    }
-
     @Override
     public String toString() {
         return "Doctor{" +
-                "id=" + id +
+                "DoctorId=" + DoctorId +
                 ", specialisation='" + specialisation + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", workTime=" + workTime +
+                ", lastName='" + lastName +
                 '}';
     }
 }

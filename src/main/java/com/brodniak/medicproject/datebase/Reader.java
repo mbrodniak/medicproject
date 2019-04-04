@@ -1,6 +1,6 @@
 package com.brodniak.medicproject.datebase;
 
-import com.brodniak.medicproject.Doctor;
+import com.brodniak.medicproject.model.Doctor;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
