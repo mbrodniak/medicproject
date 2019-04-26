@@ -20,7 +20,6 @@ public class WebController {
 
     @PostMapping("/add")
     public String addPatient(@RequestBody PatientDTO patientDTO) {
-
         try{
             System.out.println(patientDTO);
             patientRepository.save(patientService.patientRegistration(patientDTO));
@@ -28,8 +27,6 @@ public class WebController {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
         return "";
     }
 
