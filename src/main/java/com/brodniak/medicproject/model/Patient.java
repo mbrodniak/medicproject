@@ -16,7 +16,7 @@ public class Patient {
     String email;
     String password;
 
-    public Patient(){
+    public Patient() {
 
     }
 

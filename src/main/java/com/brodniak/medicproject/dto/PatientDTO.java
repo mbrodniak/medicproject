@@ -1,4 +1,5 @@
 package com.brodniak.medicproject.dto;
+
 import java.sql.Date;
 
 public class PatientDTO {

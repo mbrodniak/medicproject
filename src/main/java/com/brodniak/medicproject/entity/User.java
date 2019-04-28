@@ -22,7 +22,8 @@ public class User {
 
     public User() {
     }
-    public User(UserDTO userDTO){
+
+    public User(UserDTO userDTO) {
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
         this.role = userDTO.getRole();

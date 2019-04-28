@@ -2,7 +2,9 @@ package com.brodniak.medicproject.controller;
 
 import com.brodniak.medicproject.entity.Doctor;
 import com.brodniak.medicproject.repository.DoctorRepository;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ public class DoctorController {
     public DoctorRepository doctorRepository;
 
     @GetMapping(path = "/all")
-    public List<Doctor> getAll(){
+    public List<Doctor> getAll() {
         return doctorRepository.findAll();
     }
 

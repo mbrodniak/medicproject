@@ -1,6 +1,7 @@
 package com.brodniak.medicproject.entity;
 
 import com.brodniak.medicproject.dto.PatientDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -24,7 +25,7 @@ public class Patient {
     @Column(name = "password")
     private String password;
 
-    public Patient(){
+    public Patient() {
 
     }
 

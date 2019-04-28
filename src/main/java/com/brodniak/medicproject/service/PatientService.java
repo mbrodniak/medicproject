@@ -10,7 +10,7 @@ public class PatientService {
 
     public Patient patientRegistration(PatientDTO patientDTO) {
 
-        try{
+        try {
             Patient patient = new Patient(patientDTO);
             System.out.println("Odebrany patient to: " + patientDTO.toString());
             patient.setFirstName(patientDTO.getFirstName());
@@ -20,8 +20,7 @@ public class PatientService {
             patient.setEmail(patientDTO.getEmail());
             patient.setPassword(patientDTO.getPassword());
             return patient;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new Patient();
         }

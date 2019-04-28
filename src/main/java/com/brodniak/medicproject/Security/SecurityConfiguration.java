@@ -30,11 +30,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated().and().httpBasic();
 
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("javainuse").password("{noop}password").roles("USER");
     }
-//    @Override
+
+    //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.jdbcAuthentication()
 //                .dataSource(dataSource())
@@ -43,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .authoritiesByUsernameQuery("select email, role from user where email=?");
 //    }
     @Bean(name = "dataSource")
-    public DriverManagerDataSource dataSource(){
+    public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 
         driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -55,14 +57,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:4200");
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200");
             }
         };
     }

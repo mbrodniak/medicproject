@@ -10,7 +10,7 @@ public class UserDTO {
     boolean enabled;
     String role;
 
-    public UserDTO(){
+    public UserDTO() {
 
     }
 

@@ -12,8 +12,8 @@ public class SqlUtil {
     private static Statement statement;
 
 
-    public static void createDoctorDB(Connection connection)  {
-        try{
+    public static void createDoctorDB(Connection connection) {
+        try {
 //            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root", "Kolega66." );
             statement = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS doctor" +
@@ -24,35 +24,35 @@ public class SqlUtil {
                     "PRIMARY KEY (doctor_id))";
             statement.execute(sql);
             statement.close();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
         }
 
     }
-    public static void fillDoctorDB(Connection connection, List<Doctor> doctorList){
-        try{
+
+    public static void fillDoctorDB(Connection connection, List<Doctor> doctorList) {
+        try {
 
             String sql = "INSERT INTO doctor VALUES (?,?,?,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            for(Doctor doctor : doctorList){
-                preparedStatement.setInt(1,doctor.getDoctorId());
-                preparedStatement.setString(2,doctor.getFirstName());
-                preparedStatement.setString(3,doctor.getLastName());
-                preparedStatement.setString(4,doctor.getSpecialisation());
+            for (Doctor doctor : doctorList) {
+                preparedStatement.setInt(1, doctor.getDoctorId());
+                preparedStatement.setString(2, doctor.getFirstName());
+                preparedStatement.setString(3, doctor.getLastName());
+                preparedStatement.setString(4, doctor.getSpecialisation());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
             preparedStatement.close();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
         }
 
     }
-    public static void createAppointmentDB(Connection connection){
 
-        try{
+    public static void createAppointmentDB(Connection connection) {
+
+        try {
             Statement statement = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS appointment " +
                     "(appointment_id INTEGER NOT NULL, " +
@@ -68,15 +68,14 @@ public class SqlUtil {
 //            statement.executeUpdate(updateSql);
 //            statement.executeUpdate(update);
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
         }
     }
     /*Insert into appoinmentDB*/
 
-    public static void createEventDB(Connection connection){
-        try{
+    public static void createEventDB(Connection connection) {
+        try {
             Statement statement = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS event " +
                     "(event_id INTEGER NOT NULL, " +
@@ -84,19 +83,18 @@ public class SqlUtil {
                     "patient_id INTEGER NOT NULL," +
                     "PRIMARY KEY (event_id));";
             statement.execute(sql);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
         }
     }
 
     /*Inser into eventDB*/
 
-    public static void createPatientDB(Connection connection){
+    public static void createPatientDB(Connection connection) {
 
-        try{
+        try {
             Statement statement = connection.createStatement();
-            String sql ="CREATE TABLE IF NOT EXISTS patient " +
+            String sql = "CREATE TABLE IF NOT EXISTS patient " +
                     "(patient_id INTEGER NOT NULL, " +
                     "first_name VARCHAR(255) NOT NULL, " +
                     "last_name VARCHAR(255) NOT NULL, " +
@@ -107,12 +105,10 @@ public class SqlUtil {
                     "PRIMARY KEY (patient_id));";
             statement.execute(sql);
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
         }
     }
-
 
 
 }

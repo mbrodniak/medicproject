@@ -17,15 +17,15 @@ public class Reader {
     private static Logger log = Logger.getLogger(Reader.class.getName());
 
 
-    public static List<Doctor> readFromFile(){
+    public static List<Doctor> readFromFile() {
         BasicConfigurator.configure();
         List<Doctor> doctorList = null;
-        try{
+        try {
             File file = new File("C:\\Users\\brodn\\Desktop\\folder\\tekst.txt");
             Scanner scanner = new Scanner(file);
             doctorList = new LinkedList<>();
             int i = 1;
-            while(scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 String[] s = scanner.nextLine().split(" ");
                 doctorList.add(new Doctor(i, s[0], s[1], s[2]));
                 i++;
@@ -33,14 +33,12 @@ public class Reader {
             }
 
             log.info("DoctorList size: " + doctorList.size());
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
         }
         return doctorList;
 
     }
-
 
 
 }
