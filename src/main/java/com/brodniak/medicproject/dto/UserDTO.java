@@ -5,7 +5,7 @@ import com.brodniak.medicproject.entity.User;
 public class UserDTO {
 
     int id;
-    String email;
+    String username;
     String password;
     boolean enabled;
     String role;
@@ -16,7 +16,7 @@ public class UserDTO {
 
     public UserDTO(User user) {
         this.id = user.getId();
-        this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.enabled = user.getEnabled();
         this.role = user.getRole();
@@ -30,12 +30,8 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -60,5 +56,20 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

@@ -1,13 +1,17 @@
 package com.brodniak.medicproject.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity(name = "doctor")
 public class Doctor {
 
     @Id
+    @GeneratedValue
     @Column(name = "doctor_id")
     private int doctorId;
     @Column(name = "first_name")
@@ -16,6 +20,12 @@ public class Doctor {
     private String lastName;
     @Column(name = "spec")
     private String specialisation;
+
+    @JsonIgnoreProperties({"doctor", "doctorId", "eventId"})
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointment;
+
+
 
     public int getDoctorId() {
         return doctorId;
@@ -47,5 +57,14 @@ public class Doctor {
 
     public void setSpecialisation(String specialisation) {
         this.specialisation = specialisation;
+    }
+
+
+    public List<Appointment> getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(List<Appointment> appointment) {
+        this.appointment = appointment;
     }
 }

@@ -1,6 +1,8 @@
 package com.brodniak.medicproject.entity;
 
 import com.brodniak.medicproject.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -11,8 +13,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
-    @Column(name = "email")
-    String email;
+    @Column(name = "username")
+    String username;
     @Column(name = "password")
     String password;
     @Column(name = "role")
@@ -20,11 +22,15 @@ public class User {
     @Column(name = "enabled")
     Boolean enabled;
 
+    @JsonIgnoreProperties("appointment")
+    @OneToOne(mappedBy = "user")
+    private Patient patient;
+
     public User() {
     }
 
     public User(UserDTO userDTO) {
-        this.email = userDTO.getEmail();
+        this.username = userDTO.getUsername();
         this.password = userDTO.getPassword();
         this.role = userDTO.getRole();
         this.enabled = userDTO.isEnabled();
@@ -38,12 +44,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -68,5 +74,24 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }

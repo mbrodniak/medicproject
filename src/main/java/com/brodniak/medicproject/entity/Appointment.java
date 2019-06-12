@@ -1,25 +1,35 @@
 package com.brodniak.medicproject.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity(name = "appointment")
 public class Appointment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "appointment_id")
     private int appointmentId;
     @Column(name = "doctor_id")
     private int doctorId;
-    @Column(name = "start_date")
-    private Date startDate;
-    @Column(name = "end_date")
-    private Date endDate;
-    @Column(name = "event_id")
-    private int event;
+    @Column(name = "date_")
+    private Timestamp date;
+    @Column(name = "patient_id")
+    private int patientId;
+
+    @JsonIgnoreProperties("appointment")
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", insertable = false, updatable = false)
+    private Doctor doctor;
+
+    @JsonIgnoreProperties({"patient"})
+    @ManyToOne
+    @JoinColumn(name = "patient_id", referencedColumnName ="patient_id" , insertable = false, updatable = false)
+    private Patient patient;
+
 
     public int getAppointmentId() {
         return appointmentId;
@@ -37,27 +47,47 @@ public class Appointment {
         this.doctorId = doctorId;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
-    public int getEvent() {
-        return event;
+    public int getPatientId() {
+        return patientId;
     }
 
-    public void setEvent(int event) {
-        this.event = event;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId=" + appointmentId +
+                ", doctorId=" + doctorId +
+                ", date=" + date +
+                ", patientId=" + patientId +
+                ", doctor=" + doctor +
+                ", patient=" + patient +
+                '}';
     }
 }

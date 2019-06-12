@@ -1,7 +1,11 @@
 package com.brodniak.medicproject.entity;
 
 import com.brodniak.medicproject.dto.PatientDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -20,10 +24,16 @@ public class Patient {
     private Date birthDate;
     @Column(name = "ability")
     private Boolean ability;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "password")
-    private String password;
+
+
+    @JsonIgnoreProperties({"patient", "doctorId"})
+    @OneToMany(mappedBy = "patient")
+    private List <Appointment> appointment;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
 
     public Patient() {
 
@@ -36,8 +46,6 @@ public class Patient {
         this.lastName = patientDTO.getLastName();
         this.birthDate = patientDTO.getBirthDate();
         this.ability = patientDTO.isAbility();
-        this.email = patientDTO.getEmail();
-        this.password = patientDTO.getPassword();
     }
 
     public int getPatientId() {
@@ -80,19 +88,19 @@ public class Patient {
         this.ability = ability;
     }
 
-    public String getEmail() {
-        return email;
+    public List <Appointment> getAppointment() {
+        return appointment;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAppointment(List <Appointment> appointment) {
+        this.appointment = appointment;
     }
 
-    public String getPassword() {
-        return password;
+    public User getUser() {
+        return user;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

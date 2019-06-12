@@ -9,9 +9,6 @@ public class PatientDTO {
     String lastName;
     Date birthDate;
     boolean ability;
-    String email;
-    String password;
-
 
     public PatientDTO() {
     }
@@ -56,22 +53,6 @@ public class PatientDTO {
         this.ability = ability;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "PatientDTO{" +
@@ -80,8 +61,6 @@ public class PatientDTO {
                 ", lastName='" + lastName + '\'' +
 //                ", birthDate=" + birthDate +
                 ", ability=" + ability +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

@@ -17,8 +17,6 @@ public class PatientService {
             patient.setLastName(patientDTO.getLastName());
             patient.setBirthDate(patientDTO.getBirthDate());
             patient.setAbility(patientDTO.isAbility());
-            patient.setEmail(patientDTO.getEmail());
-            patient.setPassword(patientDTO.getPassword());
             return patient;
         } catch (Exception e) {
             System.out.println(e.getMessage());
