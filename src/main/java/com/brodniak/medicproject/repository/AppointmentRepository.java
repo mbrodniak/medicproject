@@ -5,6 +5,7 @@ import com.brodniak.medicproject.entity.Appointment;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,7 +27,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     List<Appointment> findByDateBefore(Date date);
 
-
     Appointment save(Appointment appointment);
+
+    ArrayList<Appointment> findAllByDateBetween(Timestamp startDate, Timestamp endDate);
 
 }

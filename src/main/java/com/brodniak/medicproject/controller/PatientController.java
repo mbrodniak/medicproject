@@ -1,23 +1,20 @@
 package com.brodniak.medicproject.controller;
 
 import com.brodniak.medicproject.dto.PatientDTO;
-import com.brodniak.medicproject.dto.UserDTO;
 import com.brodniak.medicproject.entity.Patient;
 import com.brodniak.medicproject.entity.User;
 import com.brodniak.medicproject.repository.PatientRepository;
 import com.brodniak.medicproject.repository.UserRepository;
 import com.brodniak.medicproject.service.PatientService;
+import com.brodniak.medicproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,6 +37,9 @@ public class PatientController {
     UserRepository userRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -49,6 +49,7 @@ public class PatientController {
     public List<Patient> getAll() {
         return patientRepository.findAll();
     }
+
 
     @GetMapping(path = "/userAll")
     public List<User> getAllUser() {
@@ -60,12 +61,10 @@ public class PatientController {
         return userRepository.findById(id);
     }
 
-    @PostMapping("/add")
-    public String addPatient(@RequestParam("file") MultipartFile file, @RequestBody PatientDTO patientDTO) {
+    @PostMapping("/send")
+    public boolean uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            System.out.println(patientDTO);
-            patientRepository.save(patientService.patientRegistration(patientDTO));
-            if(file != null){
+            if (file != null) {
                 File newFile = new File(file.getOriginalFilename());
                 newFile.createNewFile();
                 FileOutputStream output = new FileOutputStream(newFile);
@@ -82,10 +81,38 @@ public class PatientController {
                 FileSystemResource fileSystemResource = new FileSystemResource(newFile);
                 helper.addAttachment("Zalacznik", fileSystemResource);
                 javaMailSender.send(message);
+                return true;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    @PostMapping("/add")
+    public boolean addPatient(@RequestBody PatientDTO patientDTO) {
+        try {
+            patientRepository.save(patientService.patientRegistration(patientDTO));
+            userRepository.save(userService.setUser(patientDTO));
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "";
+        return false;
     }
+
+    @PostMapping(path = "/updatePatientState")
+    public String changePatientAbility(@RequestParam int id) {
+        patientRepository.changePatientAbility(id);
+        return "Patient with id: " + id +" updated!";
+    }
+
+    @GetMapping(path = "/getAllNew")
+    public ArrayList<Patient> getAllNew() {
+        return patientRepository.getAllByAbility();
+    }
+
 }

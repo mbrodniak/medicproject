@@ -14,4 +14,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
     Doctor findByDoctorId(Integer id);
 
+    List <Doctor> findBySpecialisation(String spec);
 }

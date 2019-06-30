@@ -4,7 +4,9 @@ import com.brodniak.medicproject.entity.Appointment;
 import com.brodniak.medicproject.repository.AppointmentRepository;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,6 +42,16 @@ public class AppointmentController {
     public List<Appointment> getAll(){
 
         return appointmentRepository.findAll();
+    }
+
+    @GetMapping(path = "/closestAppointment")
+    public List<Appointment> getClosestAppointmentByDate(){
+        return null;
+    }
+
+    @GetMapping(path = "/getAllByDate")
+    public ArrayList<Appointment> getAllByDate(@RequestParam Timestamp startDate, Timestamp endDate){
+        return appointmentRepository.findAllByDateBetween(startDate,endDate);
     }
 
 }

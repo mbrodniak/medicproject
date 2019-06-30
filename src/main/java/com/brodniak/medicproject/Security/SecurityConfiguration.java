@@ -1,5 +1,6 @@
 package com.brodniak.medicproject.Security;
 
+import com.brodniak.medicproject.service.CustomEmployerDetailsService;
 import com.brodniak.medicproject.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.util.Properties;
 
@@ -35,11 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    CustomEmployerDetailsService employerDetailsService;
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
+//        authenticationProvider.setUserDetailsService(employerDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
@@ -56,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(new CorsConfiguration(), ChannelProcessingFilter.class);
         http.
                 authorizeRequests()
-                .antMatchers("/**/login", "/**/token", "/**/add").permitAll()
+                .antMatchers("/**/login", "/**/token", "/**/add","/**/send","/**/employerLogin", "/**/getAllNew", "/**/updatePatientState","/**/getAllByDate").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -1,26 +1,17 @@
 package com.brodniak.medicproject.controller;
 
+import com.brodniak.medicproject.dto.EmployerDTO;
 import com.brodniak.medicproject.dto.UserDTO;
-import com.brodniak.medicproject.entity.Appointment;
+import com.brodniak.medicproject.entity.Employer;
+import com.brodniak.medicproject.entity.Patient;
 import com.brodniak.medicproject.repository.AppointmentRepository;
+import com.brodniak.medicproject.repository.EmployerRepository;
 import com.brodniak.medicproject.repository.PatientRepository;
 import com.brodniak.medicproject.repository.UserRepository;
 import com.brodniak.medicproject.service.PatientService;
-
 import java.security.Principal;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-//import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -41,16 +32,28 @@ public class WebController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmployerRepository employerRepository;
+
 
     @PostMapping(path = "/login")
-    public ResponseEntity<UserDTO> login(Principal principal, HttpSession httpSession){
+    public ResponseEntity login(Principal principal){
 
         com.brodniak.medicproject.entity.User authenticatedUser = userRepository.findByUsername(principal.getName());
         UserDTO userDTO = new UserDTO(authenticatedUser);
-//        String encode = Base64.getEncoder().encodeToString((userDTO.getUsername() + ":" + userDTO.getPassword()).getBytes());
-//        userDTO.setToken("Basic " + encode);
+        if(userDTO.getRole().equals("doctor")){
+            return ResponseEntity.ok((userDTO));
+        }else if(userDTO.getRole().equals("employer")){
+            return ResponseEntity.ok(userDTO);
+        }else if(userDTO.getRole().equals("ROLE_USER")){
+            Patient patient = patientRepository.findById(userDTO.getId());
+            if(!patient.getAbility()){
+                return ResponseEntity.status(401).build();
+            }
+        }
         return ResponseEntity.ok(userDTO);
     }
+
 
 
 

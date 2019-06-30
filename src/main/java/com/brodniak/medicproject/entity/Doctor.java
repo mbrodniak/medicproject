@@ -3,6 +3,8 @@ package com.brodniak.medicproject.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.lang.Nullable;
+
 import java.util.List;
 
 import javax.persistence.*;

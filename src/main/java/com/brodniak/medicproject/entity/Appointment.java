@@ -25,7 +25,7 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", insertable = false, updatable = false)
     private Doctor doctor;
 
-    @JsonIgnoreProperties({"patient"})
+//    @JsonIgnoreProperties({"patient"})
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName ="patient_id" , insertable = false, updatable = false)
     private Patient patient;
